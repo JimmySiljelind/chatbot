@@ -1,6 +1,21 @@
-import { get_encoding } from "tiktoken";
+import OpenAI from 'openai';
+import 'dotenv/config';
 
-const encoding = get_encoding('cl100k_base');
-const tokens = encoding.encode('Hello World! This is the first test of tiktoken library.');
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-console.log(tokens);
+const client = new OpenAI({
+    apiKey: OPENAI_API_KEY,
+});
+
+const stream = await client.responses.create({
+    model: 'gpt-4.1',
+    input: 'Write a story about a robot',
+    temperature: 0.7,
+    max_output_tokens: 250,
+    stream: true
+});
+
+for await (const event of stream) {
+    if (event.delta)
+        console.log(event.delta);
+}
