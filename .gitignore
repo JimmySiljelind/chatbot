@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+
+# Env files
+.env
+
+# Lock files (optional, but good if you don’t wanna commit them)
+package-lock.json
+yarn.lock
+
+# Ignore OpenAI cache (if any)
+.openai/
